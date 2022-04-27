@@ -8,8 +8,8 @@ namespace DotNetDownloader
 {
     public partial class Form1 : Form
     {
-        private string? url { get; set; }
-        private string? exeInstaller { get; set; }
+        string url = string.Empty;
+        string exeInstaller = string.Empty;
 
         public Form1()
         {
@@ -99,11 +99,19 @@ namespace DotNetDownloader
         {
             if (File.Exists(exeInstaller))
             {
-                Process process = new Process();
-                process.StartInfo.FileName = exeInstaller;
-                process.StartInfo.UseShellExecute = true;
-                process.Start();
-                process.WaitForExit();
+                try
+                {
+                    Process process = new Process();
+                    process.StartInfo.FileName = exeInstaller;
+                    process.StartInfo.UseShellExecute = true;
+                    process.Start();
+                    process.WaitForExit();
+                    process.Close();
+                }
+                catch (Exception)
+                {
+                    //Do nothing
+                }
             }
             else
             {
