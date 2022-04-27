@@ -108,8 +108,8 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = ".NET Downloader";
+            this.Text = ".NET Downloader";
             this.ResumeLayout(false);
             this.PerformLayout();
 
