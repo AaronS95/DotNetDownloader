@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using System.Net;
 using System.Diagnostics;
@@ -67,30 +68,47 @@ namespace DotNetDownloader
 
         private static void Download(string url, string installer)
         {
-            using (var wc = new WebClient())
-                try
-                {
-                    wc.DownloadFile(url, installer);
-                    MessageBox.Show("Installer downloaded!");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+            WebClient wc = new WebClient();
+            try
+            {
+                wc.DownloadFile(url, installer);
+                MessageBox.Show("Installer downloaded!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            wc.Dispose();
+        }
+
+        private void CheckTempFolder()
+        {
+            if (!Directory.Exists(@"C:\Temp"))
+            {
+                Directory.CreateDirectory(@"C:\Temp");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            CheckTempFolder();
             Download(url, exeInstaller);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Process process = new Process();
-            process.StartInfo.FileName = exeInstaller;
-            process.StartInfo.UseShellExecute = true;
-            process.Start();
-            process.WaitForExit();
+            if (File.Exists(exeInstaller))
+            {
+                Process process = new Process();
+                process.StartInfo.FileName = exeInstaller;
+                process.StartInfo.UseShellExecute = true;
+                process.Start();
+                process.WaitForExit();
+            }
+            else
+            {
+                MessageBox.Show("The installer for the runtime selected does not exist");
+            }
         }
     }
 }
