@@ -91,8 +91,16 @@ namespace DotNetDownloader
 
         private void button1_Click(object sender, EventArgs e)
         {
-            CheckTempFolder();
-            Download(url, exeInstaller);
+            if (url != string.Empty && exeInstaller != string.Empty)
+            {
+                CheckTempFolder();
+                Download(url, exeInstaller);
+            }
+            else
+            {
+                MessageBox.Show("Please select a framework from the dropdown menu");
+                return;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
